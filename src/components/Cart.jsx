@@ -2,6 +2,18 @@ import React from 'react'
 
 const Cart = (props) => {
     const { cartItems, onAdd, onRemove } = props;
+
+    //getting the prices of products
+    const itemsPrice = cartItems.reduce((a,c) => a + c.qty * c.price,0);
+    
+    //calculating the shipping charges
+    const shippingPrice = itemsPrice > 2500 ? 0 : 200;
+
+    //calculating the 1% tax on total price
+    const taxPrice = itemsPrice * 0.01;
+
+    //calculating final price
+    const finalPrice = itemsPrice + shippingPrice + taxPrice;
   return (
     <div className='container'>
         <h1 className='text-center display-2'>Cart</h1>
@@ -32,6 +44,9 @@ const Cart = (props) => {
             }
         </table>
         )}
+        <p>Actual Price: <b>{itemsPrice}</b></p>
+        <p>Tax Added: <b>{taxPrice}</b></p>
+        <p>After adding Shipping charges & Tax: <b>{finalPrice}</b></p>
     </div>
   )
 }
